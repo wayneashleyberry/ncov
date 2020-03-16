@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/dustin/go-humanize"
 	"github.com/leekchan/accounting"
 	"github.com/wayneashleyberry/truecolor/pkg/color"
 )
@@ -86,7 +87,8 @@ func run() error {
 				color.Color(68, 155, 226).Printf("Recovered: %s", accounting.FormatNumber(item.TotalRecovered, 0, ",", "."))
 				fmt.Print("  ")
 				color.Color(175, 176, 62).Printf("Serious: %s", accounting.FormatNumber(item.SeriousCases, 0, ",", "."))
-				fmt.Println("")
+				fmt.Print("  ")
+				fmt.Printf("Updated %s\n", humanize.Time(item.UpdatedAt))
 			}
 		}
 	}
