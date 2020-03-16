@@ -13,6 +13,8 @@
 go get github.com/wayneashleyberry/ncov
 ```
 
+<small>[Release binaries are also available.](https://github.com/wayneashleyberry/ncov/releases/latest)</small>
+
 ### Usage
 
 ```sh
