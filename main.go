@@ -133,7 +133,7 @@ func getItems() ([]item, error) {
 	return r, nil
 }
 
-func printStatistics() error {
+func getNames() ([]string, error) {
 	names := []string{
 		"Total",
 		"United Kingdom",
@@ -141,6 +141,15 @@ func printStatistics() error {
 		// "China",
 		// "Australia",
 		"USA",
+	}
+
+	return names, nil
+}
+
+func printStatistics() error {
+	names, err := getNames()
+	if err != nil {
+		return err
 	}
 
 	items, err := getItems()
