@@ -19,7 +19,7 @@ func main() {
 		Use:  "ncov",
 		Long: "SARS-CoV-2 / COVID-19 statistics from https://covid19stats.live",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			return run()
+			return printStatistics()
 		},
 	}
 
@@ -55,6 +55,18 @@ func main() {
 	}
 }
 
+func validate(name string) error {
+	return nil
+}
+
+func readConfig() ([]string, error) {
+	return []string{}, nil
+}
+
+func writeConfig(names []string) error {
+	return nil
+}
+
 func add(name string) error {
 	return nil
 }
@@ -67,7 +79,23 @@ func list() error {
 	return nil
 }
 
-func run() error {
+type item struct {
+	ID             string    `json:"_id"`
+	Name           string    `json:"name"`
+	NameEs         string    `json:"nameEs"`
+	TotalCases     int       `json:"totalCases"`
+	TotalDeaths    int       `json:"totalDeaths"`
+	SeriousCases   int       `json:"seriousCases"`
+	TotalRecovered int       `json:"totalRecovered"`
+	TotalCases24H  int       `json:"totalCases24h"`
+	TotalDeaths24H int       `json:"totalDeaths24h"`
+	CreatedAt      time.Time `json:"createdAt"`
+	UpdatedAt      time.Time `json:"updatedAt"`
+	Slug           string    `json:"slug,omitempty"`
+	Symbol         string    `json:"symbol,omitempty"`
+}
+
+func getItems() ([]item, error) {
 	c := &http.Client{
 		Timeout: time.Second * 10,
 	}
@@ -76,48 +104,36 @@ func run() error {
 
 	req, err := http.NewRequest(http.MethodGet, baseURL, nil)
 	if err != nil {
-		return err
+		return []item{}, err
 	}
 
 	resp, err := c.Do(req)
 	if err != nil {
-		return err
+		return []item{}, err
 	}
 
 	defer resp.Body.Close()
 
 	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		return err
+		return []item{}, err
 	}
 
 	if resp.StatusCode != http.StatusOK {
-		return fmt.Errorf("bad status code")
+		return []item{}, fmt.Errorf("bad status code")
 	}
 
-	type items []struct {
-		ID             string    `json:"_id"`
-		Name           string    `json:"name"`
-		NameEs         string    `json:"nameEs"`
-		TotalCases     int       `json:"totalCases"`
-		TotalDeaths    int       `json:"totalDeaths"`
-		SeriousCases   int       `json:"seriousCases"`
-		TotalRecovered int       `json:"totalRecovered"`
-		TotalCases24H  int       `json:"totalCases24h"`
-		TotalDeaths24H int       `json:"totalDeaths24h"`
-		CreatedAt      time.Time `json:"createdAt"`
-		UpdatedAt      time.Time `json:"updatedAt"`
-		Slug           string    `json:"slug,omitempty"`
-		Symbol         string    `json:"symbol,omitempty"`
-	}
-
-	var r items
+	var r []item
 
 	err = json.Unmarshal(body, &r)
 	if err != nil {
-		return err
+		return []item{}, err
 	}
 
+	return r, nil
+}
+
+func printStatistics() error {
 	names := []string{
 		"Total",
 		"United Kingdom",
@@ -127,9 +143,14 @@ func run() error {
 		"USA",
 	}
 
+	items, err := getItems()
+	if err != nil {
+		return err
+	}
+
 	var t time.Time
 
-	for _, item := range r {
+	for _, item := range items {
 		for _, name := range names {
 			if item.Name == name {
 				color.White().Underline().Print(item.Name)
