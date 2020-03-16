@@ -76,6 +76,15 @@ func remove(name string) error {
 }
 
 func list() error {
+	names, err := getNames()
+	if err != nil {
+		return err
+	}
+
+	for _, name := range names {
+		fmt.Println(name)
+	}
+
 	return nil
 }
 
