@@ -73,25 +73,27 @@ func run() error {
 	}
 
 	names := []string{"Total", "United Kingdom", "South Africa"}
+	var t time.Time
 
 	for _, item := range r {
-
 		for _, name := range names {
 			if item.Name == name {
 				color.White().Underline().Print(item.Name)
 				fmt.Print("  ")
-				color.Color(0, 176, 101).Printf("Confirmed Cases: %s", accounting.FormatNumber(item.TotalCases, 0, ",", "."))
+				color.Color(4, 173, 151).Printf("Confirmed Cases: %s", accounting.FormatNumber(item.TotalCases, 0, ",", "."))
 				fmt.Print("  ")
-				color.Color(214, 49, 68).Printf("Deceased: %s", accounting.FormatNumber(item.TotalDeaths, 0, ",", "."))
+				color.Color(236, 57, 44).Printf("Deceased: %s", accounting.FormatNumber(item.TotalDeaths, 0, ",", "."))
 				fmt.Print("  ")
-				color.Color(68, 155, 226).Printf("Recovered: %s", accounting.FormatNumber(item.TotalRecovered, 0, ",", "."))
+				color.Color(52, 152, 219).Printf("Recovered: %s", accounting.FormatNumber(item.TotalRecovered, 0, ",", "."))
 				fmt.Print("  ")
-				color.Color(175, 176, 62).Printf("Serious: %s", accounting.FormatNumber(item.SeriousCases, 0, ",", "."))
-				fmt.Print("  ")
-				fmt.Printf("Updated %s\n", humanize.Time(item.UpdatedAt))
+				color.Color(243, 156, 17).Printf("Serious: %s", accounting.FormatNumber(item.SeriousCases, 0, ",", "."))
+				fmt.Print("\n")
 			}
 		}
+		t = item.UpdatedAt
 	}
+
+	fmt.Printf("Updated %s\n", humanize.Time(t))
 
 	return nil
 }
