@@ -147,6 +147,7 @@ func getNames() ([]string, error) {
 		"Total",
 		"United Kingdom",
 		"South Africa",
+		"France",
 		// "China",
 		// "Australia",
 		"USA",
