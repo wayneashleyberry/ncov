@@ -1,5 +1,7 @@
 > SARS-CoV-2 / COVID-19 statistics from https://covid19stats.live in your command-line
 
+![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/wayneashleyberry/ncov)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/wayneashleyberry/ncov)
 [![Go Report Card](https://goreportcard.com/badge/github.com/wayneashleyberry/ncov)](https://goreportcard.com/report/github.com/wayneashleyberry/ncov)
 ![Go](https://github.com/wayneashleyberry/ncov/workflows/Go/badge.svg)
 
