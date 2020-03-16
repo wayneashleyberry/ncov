@@ -76,7 +76,7 @@ func run() error {
 		"South Africa",
 		// "China",
 		// "Australia",
-		// "USA",
+		"USA",
 	}
 
 	var t time.Time
