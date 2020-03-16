@@ -31,8 +31,6 @@ func run() error {
 		return err
 	}
 
-	// req.Header.Set("Content-Type", "application/json")
-
 	resp, err := c.Do(req)
 	if err != nil {
 		return err
@@ -80,6 +78,7 @@ func run() error {
 		// "Australia",
 		// "USA",
 	}
+
 	var t time.Time
 
 	for _, item := range r {
@@ -97,6 +96,7 @@ func run() error {
 				fmt.Print("\n")
 			}
 		}
+
 		t = item.UpdatedAt
 	}
 
