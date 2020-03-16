@@ -71,31 +71,23 @@ func run() error {
 		return err
 	}
 
-	for _, item := range r {
-		if item.Name == "Total" {
-			color.White().Underline().Print("Total")
-			fmt.Print("  ")
-			color.Color(0, 176, 101).Printf("Confirmed Cases: %s", accounting.FormatNumber(item.TotalCases, 0, ",", "."))
-			fmt.Print("  ")
-			color.Color(214, 49, 68).Printf("Deceased: %s", accounting.FormatNumber(item.TotalDeaths, 0, ",", "."))
-			fmt.Print("  ")
-			color.Color(68, 155, 226).Printf("Recovered: %s", accounting.FormatNumber(item.TotalRecovered, 0, ",", "."))
-			fmt.Print("  ")
-			color.Color(175, 176, 62).Printf("Serious: %s", accounting.FormatNumber(item.SeriousCases, 0, ",", "."))
-			fmt.Println("")
-		}
+	names := []string{"Total", "United Kingdom", "South Africa"}
 
-		if item.Name == "United Kingdom" {
-			color.White().Underline().Print("UK")
-			fmt.Print("  ")
-			color.Color(0, 176, 101).Printf("Confirmed Cases: %s", accounting.FormatNumber(item.TotalCases, 0, ",", "."))
-			fmt.Print("  ")
-			color.Color(214, 49, 68).Printf("Deceased: %s", accounting.FormatNumber(item.TotalDeaths, 0, ",", "."))
-			fmt.Print("  ")
-			color.Color(68, 155, 226).Printf("Recovered: %s", accounting.FormatNumber(item.TotalRecovered, 0, ",", "."))
-			fmt.Print("  ")
-			color.Color(175, 176, 62).Printf("Serious: %s", accounting.FormatNumber(item.SeriousCases, 0, ",", "."))
-			fmt.Println("")
+	for _, item := range r {
+
+		for _, name := range names {
+			if item.Name == name {
+				color.White().Underline().Print(item.Name)
+				fmt.Print("  ")
+				color.Color(0, 176, 101).Printf("Confirmed Cases: %s", accounting.FormatNumber(item.TotalCases, 0, ",", "."))
+				fmt.Print("  ")
+				color.Color(214, 49, 68).Printf("Deceased: %s", accounting.FormatNumber(item.TotalDeaths, 0, ",", "."))
+				fmt.Print("  ")
+				color.Color(68, 155, 226).Printf("Recovered: %s", accounting.FormatNumber(item.TotalRecovered, 0, ",", "."))
+				fmt.Print("  ")
+				color.Color(175, 176, 62).Printf("Serious: %s", accounting.FormatNumber(item.SeriousCases, 0, ",", "."))
+				fmt.Println("")
+			}
 		}
 	}
 
