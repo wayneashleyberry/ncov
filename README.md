@@ -15,7 +15,3 @@ go get github.com/wayneashleyberry/ncov
 ```sh
 ncov
 ```
-
-### Countries
-
-The list of countries displayed is currently hardcoded in `main.go`.
