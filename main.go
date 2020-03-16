@@ -80,7 +80,7 @@ func run() error {
 			if item.Name == name {
 				color.White().Underline().Print(item.Name)
 				fmt.Print("  ")
-				color.Color(4, 173, 151).Printf("Confirmed Cases: %s", accounting.FormatNumber(item.TotalCases, 0, ",", "."))
+				color.Color(4, 173, 151).Printf("Confirmed: %s", accounting.FormatNumber(item.TotalCases, 0, ",", "."))
 				fmt.Print("  ")
 				color.Color(236, 57, 44).Printf("Deceased: %s", accounting.FormatNumber(item.TotalDeaths, 0, ",", "."))
 				fmt.Print("  ")
