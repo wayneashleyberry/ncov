@@ -6,7 +6,7 @@
 ![Go](https://github.com/wayneashleyberry/ncov/workflows/Go/badge.svg)
 
 <center>
-<img width="933" alt="Screenshot 2020-03-16 at 12 39 18 am" src="https://user-images.githubusercontent.com/727262/76714382-a39ee200-671e-11ea-964e-2d9b7bb1340b.png">
+<img width="828" alt="Screenshot 2020-03-16 at 8 16 06 am" src="https://user-images.githubusercontent.com/727262/76736291-71ad7000-675e-11ea-98fa-212f9d74a397.png">
 </center>
 
 ### Installation
