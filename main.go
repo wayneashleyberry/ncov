@@ -2,20 +2,55 @@ package main
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/dustin/go-humanize"
 	"github.com/leekchan/accounting"
+	"github.com/spf13/cobra"
 	"github.com/wayneashleyberry/truecolor/pkg/color"
 )
 
 func main() {
-	err := run()
-	if err != nil {
-		panic(err)
+	cmd := &cobra.Command{
+		Use:  "ncov",
+		Long: "SARS-CoV-2 / COVID-19 statistics from https://covid19stats.live",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return run()
+		},
+	}
+
+	cmd.AddCommand(&cobra.Command{
+		Use:   "add",
+		Short: "Add a country",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return errors.New("not yet implemented")
+		},
+	})
+
+	cmd.AddCommand(&cobra.Command{
+		Use:   "remove",
+		Short: "Remove a country",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return errors.New("not yet implemented")
+		},
+	})
+
+	cmd.AddCommand(&cobra.Command{
+		Use:   "list",
+		Short: "List countries",
+		RunE: func(cmd *cobra.Command, args []string) error {
+			return errors.New("not yet implemented")
+		},
+	})
+
+	if err := cmd.Execute(); err != nil {
+		fmt.Println(err)
+		os.Exit(1)
 	}
 }
 
