@@ -72,7 +72,14 @@ func run() error {
 		return err
 	}
 
-	names := []string{"Total", "United Kingdom", "South Africa", "China", "Australia", "USA"}
+	names := []string{
+		"Total",
+		"United Kingdom",
+		"South Africa",
+		// "China",
+		// "Australia",
+		// "USA",
+	}
 	var t time.Time
 
 	for _, item := range r {
