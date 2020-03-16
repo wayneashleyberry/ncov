@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"errors"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -25,18 +24,20 @@ func main() {
 	}
 
 	cmd.AddCommand(&cobra.Command{
-		Use:   "add",
+		Use:   "add [name]",
 		Short: "Add a country",
+		Args:  cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			return errors.New("not yet implemented")
+			return add(args[0])
 		},
 	})
 
 	cmd.AddCommand(&cobra.Command{
-		Use:   "remove",
+		Use:   "remove [name]",
 		Short: "Remove a country",
+		Args:  cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			return errors.New("not yet implemented")
+			return remove(args[0])
 		},
 	})
 
@@ -44,7 +45,7 @@ func main() {
 		Use:   "list",
 		Short: "List countries",
 		RunE: func(cmd *cobra.Command, args []string) error {
-			return errors.New("not yet implemented")
+			return list()
 		},
 	})
 
@@ -52,6 +53,18 @@ func main() {
 		fmt.Println(err)
 		os.Exit(1)
 	}
+}
+
+func add(name string) error {
+	return nil
+}
+
+func remove(name string) error {
+	return nil
+}
+
+func list() error {
+	return nil
 }
 
 func run() error {
