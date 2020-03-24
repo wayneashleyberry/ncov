@@ -8,84 +8,24 @@ import (
 	"os"
 	"time"
 
-	"github.com/dustin/go-humanize"
 	"github.com/leekchan/accounting"
 	"github.com/spf13/cobra"
-	"github.com/wayneashleyberry/truecolor/pkg/color"
 )
 
 func main() {
 	cmd := &cobra.Command{
 		Use:  "ncov",
 		Long: "SARS-CoV-2 / COVID-19 statistics from https://covid19stats.live",
+		Args: cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
-			return printStatistics()
+			return printStatistics(args[0])
 		},
 	}
-
-	cmd.AddCommand(&cobra.Command{
-		Use:   "add [name]",
-		Short: "Add a country",
-		Args:  cobra.ExactArgs(1),
-		RunE: func(cmd *cobra.Command, args []string) error {
-			return add(args[0])
-		},
-	})
-
-	cmd.AddCommand(&cobra.Command{
-		Use:   "remove [name]",
-		Short: "Remove a country",
-		Args:  cobra.ExactArgs(1),
-		RunE: func(cmd *cobra.Command, args []string) error {
-			return remove(args[0])
-		},
-	})
-
-	cmd.AddCommand(&cobra.Command{
-		Use:   "list",
-		Short: "List countries",
-		RunE: func(cmd *cobra.Command, args []string) error {
-			return list()
-		},
-	})
 
 	if err := cmd.Execute(); err != nil {
 		fmt.Println(err)
 		os.Exit(1)
 	}
-}
-
-func validate(name string) error {
-	return nil
-}
-
-func readConfig() ([]string, error) {
-	return []string{}, nil
-}
-
-func writeConfig(names []string) error {
-	return nil
-}
-
-func add(name string) error {
-	return nil
-}
-
-func remove(name string) error {
-	return nil
-}
-
-func list() error {
-	names, err := getNames()
-	if err != nil {
-		return err
-	}
-
-	for _, name := range names {
-		fmt.Println(name)
-	}
-
-	return nil
 }
 
 type item struct {
@@ -142,53 +82,17 @@ func getItems() ([]item, error) {
 	return r, nil
 }
 
-func getNames() ([]string, error) {
-	names := []string{
-		"Total",
-		"United Kingdom",
-		"South Africa",
-		"France",
-		// "China",
-		// "Australia",
-		"USA",
-	}
-
-	return names, nil
-}
-
-func printStatistics() error {
-	names, err := getNames()
-	if err != nil {
-		return err
-	}
-
+func printStatistics(name string) error {
 	items, err := getItems()
 	if err != nil {
 		return err
 	}
 
-	var t time.Time
-
 	for _, item := range items {
-		for _, name := range names {
-			if item.Name == name {
-				color.White().Underline().Print(item.Name)
-				fmt.Print("  ")
-				color.Color(4, 173, 151).Printf("Confirmed: %s", accounting.FormatNumber(item.TotalCases, 0, ",", "."))
-				fmt.Print("  ")
-				color.Color(236, 57, 44).Printf("Deceased: %s", accounting.FormatNumber(item.TotalDeaths, 0, ",", "."))
-				fmt.Print("  ")
-				color.Color(52, 152, 219).Printf("Recovered: %s", accounting.FormatNumber(item.TotalRecovered, 0, ",", "."))
-				fmt.Print("  ")
-				color.Color(243, 156, 17).Printf("Serious: %s", accounting.FormatNumber(item.SeriousCases, 0, ",", "."))
-				fmt.Print("\n")
-			}
+		if item.Name == name {
+			fmt.Println(accounting.FormatNumber(item.TotalCases, 0, ",", "."))
 		}
-
-		t = item.UpdatedAt
 	}
-
-	fmt.Printf("Updated %s\n", humanize.Time(t))
 
 	return nil
 }
